@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
-</head>
-<body>
+<!-- Display template from within base template -->
+{% extends "base.html" %}
+<!-- Tell base template which block element we're injecing our code into -->
+{% block content %}
+
+    <h2>I'm extending the base template</h2>
     <!-- Use Jinja Language to loop through each task item from within collection -->
     <!-- Display each field in our db -->
     <!-- Iteration uses new task var created in for loop and dot notation to target fields -->
@@ -17,5 +14,4 @@
         {{ task.is_urgent }}<br>
         {{ task.due_date }}<br>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
