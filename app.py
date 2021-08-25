@@ -5,6 +5,7 @@ from flask import (
 from flask_pymongo import PyMongo
 # Need to render object Id in order to find documents from Mongo DB
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 # Only import env.py file if the os can find an existing
 # file path
 if os.path.exists("env.py"):
@@ -35,6 +36,10 @@ def get_tasks():
     # 1st tasks is what template will use, 2nd tasks is tasks var above
     return render_template("tasks.html", tasks=tasks)
 
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    return render_template("register.html")
 
 
 # Tell app how and where to run application
