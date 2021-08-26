@@ -120,6 +120,9 @@ def logout():
     return redirect(url_for('login'))
 
 
+@app.route('/add_task')
+def add_task():
+    return render_template('add_task.html')
 
 # Tell app how and where to run application
 if __name__ == "__main__":
