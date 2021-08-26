@@ -32,7 +32,7 @@ mongo = PyMongo(app)
 @app.route("/get_tasks")
 def get_tasks():
     # Find all docs from tasks collection and assign them to tasks var 
-    tasks = mongo.db.tasks.find()
+    tasks = list(mongo.db.tasks.find())
     # 1st tasks is what template will use, 2nd tasks is tasks var above
     return render_template("tasks.html", tasks=tasks)
 
