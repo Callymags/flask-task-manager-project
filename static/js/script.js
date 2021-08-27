@@ -3,6 +3,7 @@ $(document).ready(function(){
     $('.sidenav').sidenav({edge: "right"}); // edge = Materialize class to push toggler to right
     $('.collapsible').collapsible(); // Initialize Collapsible Component
     $('.tooltipped').tooltip(); // Initialize Tooltip
+    $('select').formSelect();
     $('.datepicker').datepicker({
       format: 'dd mmmm, yyyy',
       yearRange: 3,
