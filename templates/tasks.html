@@ -3,6 +3,8 @@
 <!-- Tell base template which block element we're injecing our code into -->
 {% block content %}
 
+    <h3 class="light-blue-text text-darken-4 center-align">All Tasks</h3>
+
     <ul class="collapsible">
         <!-- Use Jinja Language to loop through each task item from within collection -->
         <!-- Iteration uses new task var created in for loop and dot notation to target fields -->
@@ -19,6 +21,7 @@
             <div class="collapsible-body">
                 <strong>{{ task.category_name }}</strong>
                 <p>{{ task.task_description }}</p>
+                <p><em>by: {{ task.created_by }}</em></p>
             </div>
         </li>
         {% endfor %}

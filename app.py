@@ -120,8 +120,24 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/add_task')
+@app.route('/add_task', methods=['GET', 'POST'])
 def add_task():
+    # Check to see if requested method is a Post method
+    if request.method == 'POST':
+        # Ternary operator to deal with is_urgent item in dict
+        is_urgent = 'on' if request.form.get('is_urgent') else 'off'
+        task = {
+            'category_name': request.form.get('category_name'), 
+            'task_name': request.form.get('task_name'), 
+            'task_description': request.form.get('task_description'), 
+            'is_urgent': is_urgent,
+            'due_date': request.form.get('due_date'), 
+            'created_by': session['user']
+        }
+        # If so, insert dictionary above into db
+        mongo.db.tasks.insert_one(task)
+        flash('Task Successfully Added')
+        return redirect(url_for('get_tasks'))
     # Find category names in Mongo DB
     # Sort(1) will sort the category in Alphabetical order
     categories = mongo.db.categories.find().sort('category_name', 1)
