@@ -146,6 +146,23 @@ def add_task():
 
 @app.route('/edit_task/<task_id>', methods=['GET', 'POST'])
 def edit_task(task_id):
+    # Check to see if requested method is a Post method
+    if request.method == 'POST':
+        # Ternary operator to deal with is_urgent item in dict
+        is_urgent = 'on' if request.form.get('is_urgent') else 'off'
+        submit = {
+            'category_name': request.form.get('category_name'), 
+            'task_name': request.form.get('task_name'), 
+            'task_description': request.form.get('task_description'), 
+            'is_urgent': is_urgent,
+            'due_date': request.form.get('due_date'), 
+            'created_by': session['user']
+        }
+        # Search for a task in db by the task Id coming from the route
+        # Update task with submit dictionary above once task Id is found
+        mongo.db.tasks.update({'_id': ObjectId(task_id)}, submit)
+        flash('Task Successfully Updated')
+        
     # Retrieve task you want to edit from db
     # _id is primary key that identifies specific task
     task = mongo.db.tasks.find_one({'_id': ObjectId(task_id)})
