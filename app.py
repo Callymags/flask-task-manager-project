@@ -162,7 +162,7 @@ def edit_task(task_id):
         # Update task with submit dictionary above once task Id is found
         mongo.db.tasks.update({'_id': ObjectId(task_id)}, submit)
         flash('Task Successfully Updated')
-        
+
     # Retrieve task you want to edit from db
     # _id is primary key that identifies specific task
     task = mongo.db.tasks.find_one({'_id': ObjectId(task_id)})
@@ -170,6 +170,15 @@ def edit_task(task_id):
     # Grab list of categories and render template
     categories = mongo.db.categories.find().sort('category_name', 1)
     return render_template('edit_task.html', task=task, categories=categories)
+
+
+@app.route('/delete_task/<task_id>')
+def delete_task(task_id):
+    # Get specific task by Object Id and delete it
+    mongo.db.tasks.remove({'_id': ObjectId(task_id)})
+    flash('Task Successfully Deleted')
+    # Redirect user back to primary function for the home page
+    return redirect(url_for('get_tasks'))
 
 
 
