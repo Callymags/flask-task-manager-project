@@ -205,6 +205,28 @@ def add_category():
     # Get method will display the empty form to the admin
     return render_template('add_category.html')
 
+
+@app.route('/edit_category/<category_id>', methods=['GET', 'POST'])
+def edit_category(category_id):
+    if request.method == 'POST':
+        # Submit new data via dictionary
+        submit = {
+            'category_name': request.form.get('category_name')
+        }
+        # Update method takes two dictionaries
+        # 1st = which specific category we want to update
+        # 2nd = submit dictionary
+        mongo.db.categories.update({'_id': ObjectId(category_id)}, submit)
+        flash('Category Successfully Updated')
+        return redirect(url_for('get_categories'))
+
+    category = mongo.db.categories.find_one({'_id': ObjectId(category_id)})
+    # 1st category = what gets passed into our template to use
+    # 2nd category = categories var defined above
+    # Which is the data returned from db
+    return render_template('edit_category.html', category=category)
+
+
 # Tell app how and where to run application
 if __name__ == "__main__":
     # Fetch default IP value from env.py file
