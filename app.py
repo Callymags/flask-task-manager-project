@@ -226,6 +226,15 @@ def edit_category(category_id):
     # Which is the data returned from db
     return render_template('edit_category.html', category=category)
 
+# Dont need POST method because we are not sending anything to db
+# Don't need to insert GET as it is the default method
+@app.route('/delete_category/<category_id>')
+def delete_category(category_id):
+    # Remove() takes a dictionary that will look for specific ObjectId
+    # ObjectID is passed through as an argument in the template above as <category_id>
+    mongo.db.categories.remove({'_id': ObjectId(category_id)})
+    flash('Category Siccessfully Deleted')
+    return redirect(url_for('get_categories'))
 
 # Tell app how and where to run application
 if __name__ == "__main__":
