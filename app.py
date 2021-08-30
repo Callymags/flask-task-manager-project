@@ -37,6 +37,16 @@ def get_tasks():
     return render_template("tasks.html", tasks=tasks)
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    # ('query') = Query name attribute from form
+    query = request.form.get('query')
+    # Perform a '$search' on any '$text index' for this collection using the query variable
+    tasks = list(mongo.db.tasks.find({'$text': {'$search': query}}))
+    return render_template("tasks.html", tasks=tasks)
+
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     # Check if requested method is equal to Post
