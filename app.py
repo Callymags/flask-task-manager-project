@@ -191,6 +191,20 @@ def get_categories():
     # Which is the data returned from db
     return render_template('categories.html', categories=categories)
 
+
+@app.route('/add_category', methods=['GET', 'POST'])
+def add_category():
+    if request.method == 'POST':
+        # Post method to create dictionary to be inserted into db
+        category =  {
+            'category_name': request.form.get('category_name')
+        }
+        mongo.db.categories.insert_one(category)
+        flash('New Category Added')
+        return redirect(url_for('get_categories'))
+    # Get method will display the empty form to the admin
+    return render_template('add_category.html')
+
 # Tell app how and where to run application
 if __name__ == "__main__":
     # Fetch default IP value from env.py file
